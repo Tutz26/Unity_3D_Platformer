@@ -7,6 +7,8 @@ public class Player_Controller : MonoBehaviour
 
     private CharacterController characterController;
 
+    private Animator animator;
+
         float vMovement = 0f;
         float hMovement = 0f;
         
@@ -18,6 +20,7 @@ public class Player_Controller : MonoBehaviour
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -33,6 +36,13 @@ public class Player_Controller : MonoBehaviour
         }
 
         characterController.Move(movement * Time.deltaTime);
+
+        if (vMovement != 0f || hMovement != 0f){
+            animator.SetInteger("state", 1);
+        } else {
+            animator.SetInteger("state", 0);
+        }
+
 
     }
 }
