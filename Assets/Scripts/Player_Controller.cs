@@ -16,6 +16,12 @@ public class Player_Controller : MonoBehaviour
 
         public float speed = 5f;
 
+        Quaternion rotation = Quaternion.identity;
+
+        Vector3 newForward = Vector3.zero;
+
+        public float turnSpeed = 5f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +38,12 @@ public class Player_Controller : MonoBehaviour
             hMovement = Input.GetAxis("Horizontal");
 
             movement = new Vector3(hMovement * speed, 0f, vMovement * speed);
+            movement = Vector3.ClampMagnitude(movement, 1f);
+
+            newForward = Vector3.RotateTowards(transform.forward, movement, turnSpeed * Time.deltaTime, 0f);
+
+            rotation = Quaternion.LookRotation(newForward);
+            transform.rotation = rotation;
 
         }
 
@@ -43,6 +55,6 @@ public class Player_Controller : MonoBehaviour
             animator.SetInteger("state", 0);
         }
 
-
+    
     }
 }
